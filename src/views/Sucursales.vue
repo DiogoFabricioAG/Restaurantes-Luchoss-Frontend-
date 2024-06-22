@@ -5,30 +5,12 @@
         <h1 class="font-Tenali text-7xl select-none font-bold ">Restaurante Luchitoss</h1>
         <div class="w-full space-x-2 space-y-2 flex flex-wrap justify-center">
            
-            <div class="border rounded-xl text-left p-2 w-2/5">
-                <h3 class="text-2xl">San Isidro</h3>
-                <p class="text-xs"><strong>Direccion: </strong>Av. Javier Prado Este 1234</p>
-                <p class="text-sm text-gray-700"><strong>Telefono: </strong>987654321</p>
-                <p><strong>Administrador: </strong>Carlos Pérez</p>
-            </div>
-            <div class="border rounded-xl text-left p-2 w-2/5">
-                <h3 class="text-2xl">San Isidro</h3>
-                <p class="text-xs"><strong>Direccion: </strong>Av. Javier Prado Este 1234</p>
-                <p class="text-sm text-gray-700"><strong>Telefono: </strong>987654321</p>
-                <p><strong>Administrador: </strong>Carlos Pérez</p>
-            </div>
-            
-            <div class="border rounded-xl text-left p-2 w-2/5">
-                <h3 class="text-2xl">San Isidro</h3>
-                <p class="text-xs"><strong>Direccion: </strong>Av. Javier Prado Este 1234</p>
-                <p class="text-sm text-gray-700"><strong>Telefono: </strong>987654321</p>
-                <p><strong>Administrador: </strong>Carlos Pérez</p>
-            </div>
-            <div class="border rounded-xl text-left p-2 w-2/5">
-                <h3 class="text-2xl">San Isidro</h3>
-                <p class="text-xs"><strong>Direccion: </strong>Av. Javier Prado Este 1234</p>
-                <p class="text-sm text-gray-700"><strong>Telefono: </strong>987654321</p>
-                <p><strong>Administrador: </strong>Carlos Pérez</p>
+            <div v-for="(sucur, index) in sucursal" :key="index" class="border rounded-xl text-left p-2 w-2/5">
+                <h3 class="text-2xl">{{ sucur.Distrito }}</h3>
+                <p class="text-xs"><strong>Direccion: </strong>{{sucur.Direccion  }}</p>
+                <p class="text-sm text-gray-700"><strong>Ruc: </strong>{{ sucur.Ruc }}</p>
+                <p><strong>Administrador: </strong>{{ sucur.Administrador
+ }}</p>
             </div>
         </div>
     </section>
@@ -36,11 +18,31 @@
 
 <script>
 import NavComponent from '@/components/NavBar.vue'
-
+import axios from 'axios'
 export default { 
     components:{
         NavComponent,
-    }
+    },
+    data() {
+        return {
+            sucursal: [],
+        }
+    },
+    mounted() {
+        this.leerDatos()
+    },
+    methods: {
+        async leerDatos(){
+            await axios.get('sucursal/mostrar')
+            .then(response => {
+                this.sucursal = response.data
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+    },
 }
 
 </script>   
