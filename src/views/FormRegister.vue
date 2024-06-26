@@ -1,32 +1,190 @@
 <template>
     <NavComponent/>
-    <section class="mt-5 text-center">
-        <p class="font-Tenali text-3xl ">Gracias por confiar en</p>
-        <h1 class="font-Tenali text-7xl select-none font-bold ">Restaurante Luchitoss</h1>
-        <p>Usted esta registrandose como <strong>{{ $route.query.role }}</strong></p>
-    </section>
-    <form method="post" enctype="multipart/form-data" class="text-sm my-4 rounded-2xl p-3 w-3/4 mx-auto text-center">
-        <div class="space-y-2 flex flex-col items-center my-2 ">
+
+    <Complemento cabezera="Gracias por confiar en nosotros" :mensaje="$route.query.role"/>
+    <span class="flex space-x-2 items-center justify-center">
+        <button @click="irAtras" class="p-1 border hover:bg-slate-300 duration-150 border-black rounded-lg"><AtrasIcon class="size-4"/></button>
+        <p class="text-sm font-Lato select-none">{{ datos }}</p>
+        <button @click="irAdelante" class="p-1 border hover:bg-slate-300 duration-150 border-black rounded-lg"><SiguienteIcon class="size-4"/></button>
+    </span>
+    <form action="." @submit.prevent="register" method="post" enctype="multipart/form-data" class="text-sm my-4 rounded-2xl p-3 w-3/4 mx-auto text-center">
+        <div v-if="pagina" class="space-y-2 flex flex-col items-center ">
+            
             <label for="name">Nombre de Usuario</label>
-            <input type="text" name="name" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+            <input type="text" v-model="nombreusuario" name="name" placeholder="Ingrese su nombre de usuario" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+
             <label for="email">Email</label>
-            <input type="email" name="email" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+            <input type="email" v-model="correo" name="email" placeholder="Ingrese su email" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+
+            <label for="distrito">Distrito</label>
+            <input type="text" v-model="distrito" name="distrito" placeholder="Ingrese su distrito" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+            
+            <label for="direccion">Dirección</label>
+            <input type="text" v-model="direccion" name="direccion" placeholder="Ingrese su dirección" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+
             <label for="passw">Contraseña</label>
-            <input type="password" name="passw" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+            <input type="password" v-model="clave" name="passw" placeholder="Ingrese su contraseña" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
         </div>
-            <button class="w-1/2 bg-blue-400 p-2 font-bold hover:bg-blue-500 duration-150 text-white">Registrar</button>
+        <div v-else class="space-y-3 flex flex-col items-center ">
+            <label for="nombre">Nombre</label>
+            <input type="text" v-model="nombre" name="nombre" placeholder="Ingrese su nombre" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+            <div class="flex space-x-2 items-center w-1/2">
+                
+                <label for="paterno">Paterno</label>
+                <input type="text" v-model="paterno" name="paterno" placeholder="Ingrese su apellido paterno" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+
+                <label for="materno">Materno</label>
+                <input type="text" v-model="materno" name="materno" placeholder="Ingrese su apellido materno" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+
+            </div>
+            
+            <label for="telefono">Telefono</label>
+            <input type="text" v-model="telefono" name="telefono" placeholder="Ingrese su teléfono" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+
+            
+            <label for="ruc">RUC</label>
+            <input type="text" v-model="ruc" name="ruc" placeholder="Ingrese su RUC" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+            <div class="flex space-x-2 items-center">
+                <label for="tipo-documento">Tipo de Documento</label>
+                <select v-model="tipoDoc" name="tipo-documento" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+                    <option value="DNI">DNI</option>
+                    <option value="Carnet de extranjeria">Carnet de Extranjería</option>
+                </select>
+
+            <label for="documento">Documento</label>
+            <input type="text" v-model="documento" name="documento" placeholder="Ingrese su documento" class="border rounded-md w-1/2 p-1 border-gray-300 shadow-md ">
+
+            </div>
+            
+
+
+        </div>
+        
+            <button class="w-1/2 my-3 bg-blue-400 p-2 font-bold hover:bg-blue-500 duration-150 text-white">Registrar</button>
+            <div v-if="mensaje_error" class="text-white select-none justify-center py-2 w-1/2 mx-auto rounded-md bg-red-500 text-sm my-2 font-Alata">
+                <p>{{ mensaje_error }}</p>
+            </div>
         
     </form>
+    
 </template>
 <script>
 import NavComponent from '@/components/NavBar.vue'
-
+import Complemento from '@/components/Complemento.vue'
+import axios from 'axios'
+import SiguienteIcon from '@/components/icons/Siguiente.vue'
+import AtrasIcon from '@/components/icons/Atras.vue'
 
 export default { 
     components:{
         NavComponent,
+        Complemento,
+        SiguienteIcon,
+        AtrasIcon,
+    },
+    data() {
+        return {
+            nombreusuario: '',
+            clave: '',
+            correo: '',
+            distrito:'',
+            mensaje_error: '',
+            pagina: 1,
+            datos : 'Cuenta',
+            nombre : '',
+            paterno: '',
+            materno: '',
+            telefono: '',
+            direccion: '',
+            ruc: '',
+            tipoDoc: '',
+            documento: ''
+        }
+    },
+    methods: {
+        irAdelante(){
+            this.pagina = 0
+            this.datos = this.$route.query.role
+        },
+        irAtras(){
+            this.pagina = 1
+            this.datos = 'Cuenta'
+        },
 
-    }
+        generateRandomString() {
+            const prefix = 'C';
+            const randomDigits = Math.floor(Math.random() * 100000).toString().padStart(5, '0');
+            return prefix + randomDigits;
+        },
+
+
+        async register(){
+            const idgenerado = this.generateRandomString()
+            if (
+                this.nombreusuario === '' || 
+                this.clave === '' || 
+                this.correo === '' || 
+                this.distrito === '' || 
+                this.nombre === '' || 
+                this.paterno === '' || 
+                this.materno === '' || 
+                this.telefono === '' || 
+                this.direccion === '' || 
+                this.ruc === '' || 
+                this.tipoDoc === '' || 
+                this.documento === ''
+            ) {
+                this.mensaje_error = 'Debes completar cada uno de las casillas';
+                return 'Error';
+            }
+            if (this.clave.length < 5 ){
+                this.mensaje_error = "Tu clave es muy corta, intenta con una mayor a 8 digitos ";
+            }
+            else {
+                
+                await axios.post('/registro/nuevaCuenta', {
+                idCuenta: idgenerado,
+                correo: this.correo,
+                clave: this.clave,
+                usuario: this.nombreusuario,
+                distrito: this.distrito
+            })
+            .then(response => {
+                if (response.data !== "La cuenta de Pedrin no ha sido agregada, es posible que el usuario ya esté registrado"){
+                    console.log('Cuenta Creada con exito');            
+                }
+                else{
+                    this.mensaje_error = response.data
+                }
+                
+            })
+            .catch(error => {
+                return error;
+            })
+            }
+            await axios.post('/registro/nuevoCliente' , {
+                idCliente: this.generateRandomString(),
+                idCuenta: idgenerado,
+                nombre: this.nombre,
+                paterno: this.paterno,
+                materno: this.materno,
+                telefono: this.telefono,
+                distrito: this.distrito,
+                direccion: this.direccion,
+                ruc: this.ruc,
+                tipoDoc: this.tipoDoc,
+                documento: this.documento
+            })
+            .then(response => {
+                console.log("Usuario Registrado Correctamente");
+                this.$router.push({name: 'login'})
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            
+        }
+    },
 }
 
 </script>   

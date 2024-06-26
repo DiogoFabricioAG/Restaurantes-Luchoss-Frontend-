@@ -7,7 +7,7 @@
             
         </router-link>
         <div v-if="userStore.user.isAuthenticated" class="flex space-x-3 text-white items-center">
-            <p class="text-black font-Tenali text-2xl">¡Bienvenido <strong>{{ userStore.user.first_name }}</strong>!</p>
+            <p class="text-black font-Tenali text-2xl">¡Bienvenido <strong class="font-Lato">{{ userStore.user.first_name }}</strong>!</p>
             <router-link :to="{name:'sucursales'}" class="rounded-full bg-fuchsia-700 p-3  border-black hover:bg-fuchsia-500 duration-150 border ">
                 <span><SucursalesIcono/></span>
             </router-link>
@@ -23,6 +23,9 @@
             <a href="#" class="rounded-full bg-pink-700 p-3  border-black hover:bg-pink-500 duration-150 border ">
                 <span><PolloIcono/></span>
             </a>
+            
+            <Botones iconComponent="ChefIcon" tooltip-text="Descripción del ícono"/>
+            
             <router-link :to="{name:'carrito'}" class="rounded-full bg-green-700 p-3  border-black hover:bg-green-500 duration-150 border ">
                 <span><Carro/></span>
             </router-link>
@@ -50,6 +53,7 @@
 import LoginIcon from '@/components/icons/LoginIcon.vue'
 import RegisterIcon from '@/components/icons/RegisterIcon.vue'
 import BadgeIcon from '@/components/icons/BadgeIcon.vue'
+import Botones from '@/components/Botones.vue'
 import ChefIcon from '@/components/icons/ChefIcon.vue'
 import Logout from '@/components/icons/Logout.vue'
 import PolloIcono from '@/components/icons/PolloIcono.vue'
@@ -58,6 +62,7 @@ import Carro from '@/components/icons/CarritoComprasIcono.vue'
 import ConsultarIcono from '@/components/icons/ConsultarIcono.vue'
 import SucursalesIcono from '@/components/icons/SucursalesIcono.vue'
 import { useUserStore } from '../stores/user'
+
 export default {
     setup() {
         const userStore = useUserStore()
@@ -67,6 +72,7 @@ export default {
     },
     components: {
         LoginIcon,
+        Botones,
         RegisterIcon,
         Logout,
         ChefIcon,

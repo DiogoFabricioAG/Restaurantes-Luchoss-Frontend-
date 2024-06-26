@@ -18,3 +18,8 @@
         <path d="M6.161 17.009l11.839 -.009" />
     </svg>
 </template>
+<script>
+export default {
+    name: 'ChefIcon'
+}
+</script>

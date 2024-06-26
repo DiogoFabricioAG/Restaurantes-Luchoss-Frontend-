@@ -1,7 +1,9 @@
 <template>
     <NavComponent/>
+
+    <Complemento mensaje="⭐" cabezera="Registrate en"/>
     <section class="w-3/4 mx-auto my-3">
-        <h3 class="font-Lato font-bold text-4xl text-center">Registrarse como </h3>
+        
         <div class="flex justify-center mt-3">
             <router-link :to="{name:'register', query:{role : 'Trabajador'}}" class="bg-red-500 hover:scale-90 duration-100 text-center text-white p-5 mx-3 ">
                 <ChefIcon class="text-center size-52"/>
@@ -19,12 +21,14 @@
 import NavComponent from '@/components/NavBar.vue'
 import ChefIcon from '@/components/icons/ChefIcon.vue'
 import UserIcon from '@/components/icons/UserIcon.vue'
+import Complemento from '@/components/Complemento.vue'
 
 export default { 
     components:{
         NavComponent,
         ChefIcon,
         UserIcon,
+        Complemento,
     }
 }
 

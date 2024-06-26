@@ -4,8 +4,8 @@ export const useUserStore = defineStore({
     id: 'user',
     state: () => ({
         user : {
-            isAuthenticated : true,
-            first_name : "Juancito",
+            isAuthenticated : false,
+            first_name : null,
             last_name : null,
             email: null,
             role: null,
@@ -14,11 +14,12 @@ export const useUserStore = defineStore({
     }),
     actions: {
         initStore() {
-
+            console.log(localStorage);
             this.user.email = localStorage.getItem('user.email')
             // this.user.first_name = localStorage.getItem('user.first_name') 
             this.user.last_name = localStorage.getItem('user.last_name') 
             this.user.role = localStorage.getItem('user.role')
+            this.user.first_name = localStorage.getItem('user.first_name')
             if (localStorage.getItem('user.last_name')){
                 this.user.isAuthenticated = true 
             }
@@ -31,10 +32,10 @@ export const useUserStore = defineStore({
             this.user.first_name = data.first_name
             this.user.last_name = data.last_name 
             this.user.role = data.role
-            localStorage.setItem('user.email',data.refresh)
-            localStorage.setItem('user.first_name',data.refresh)
-            localStorage.setItem('user.last_name',data.refresh)
-            localStorage.setItem('user.role',data.refresh)
+            localStorage.setItem('user.email',data.email)
+            localStorage.setItem('user.first_name',data.first_name)
+            localStorage.setItem('user.last_name',data.last_name)
+            localStorage.setItem('user.role',data.role)
             this.user.isAuthenticated = true
         },
         logout(){

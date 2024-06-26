@@ -1,17 +1,17 @@
 <template>
     <NavComponent/>
+    <Complemento mensaje="Comidas deliciosas te esperan" cabezera="Carrito gracias a"/>
     <main>
         <section class="font-Tenali m-3">
-            <h1 class="text-5xl font-bold">Mi Carrito</h1>
             <div class="flex w-full">
                 <div class="w-3/5">
                     <table class="min-w-full bg-white">
-            <thead class="bg-gray-200 text-gray-600">
+            <thead class="bg-gray-200 text-gray-600 text-xl text-left">
                 <tr>
-                    <th class="w-1/2 py-3 px-4 uppercase font-semibold text-sm">Producto</th>
-                    <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Cantidad</th>
-                    <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Precio</th>
-                    <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Borrar?</th>
+                    <th class="w-1/2 py-3 px-4 uppercase font-semibold ">Producto</th>
+                    <th class="w-1/6 py-3 px-4 uppercase font-semibold ">Cantidad</th>
+                    <th class="w-1/6 py-3 px-4 uppercase font-semibold ">Precio</th>
+                    <th class="w-1/6 py-3 px-4 uppercase font-semibold ">Borrar?</th>
                 </tr>
             </thead>
             <tbody class="text-gray-700">
@@ -45,11 +45,13 @@
 <script>
 import NavComponent from '@/components/NavBar.vue'
 import borrar from '@/components/icons/BorrarIcono.vue'
+import Complemento from '@/components/Complemento.vue'
 
 export default { 
     components:{
         NavComponent,
         borrar,
+        Complemento,
 
     }
 }

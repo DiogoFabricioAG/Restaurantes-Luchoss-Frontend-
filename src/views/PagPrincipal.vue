@@ -1,10 +1,7 @@
 <template>
     <NavComponent/>
     <main>
-        <section class="my-5 text-center">
-            <p class="font-Tenali text-3xl ">Comida directamente hacia tu casa</p>
-            <h1 class="font-Tenali text-7xl select-none font-bold ">Restaurante Luchitoss</h1>
-        </section>
+        <Complemento mensaje="Tu mejor elección" cabezera="Comida directamente hacia tu casa"/>
         <section class="flex">
             <div class="px-3 mx-2 w-2/5">
                 <img  src="https://ingenieriademenu.com/wp-content/uploads/2021/07/Descripcion-de-puestos-de-trabajo-en-hosteleria.jpg" alt="Elequipo">
@@ -27,9 +24,11 @@
 </template>
 <script>
 import NavComponent from '@/components/NavBar.vue'
+import Complemento from '@/components/Complemento.vue'
 export default {
     components:{
         NavComponent,
+        Complemento,
     }
 }
 
