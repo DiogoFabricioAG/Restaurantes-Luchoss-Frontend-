@@ -1,6 +1,4 @@
 <template>
-    <div class="tooltip flex items-center relative">
-      <span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="icon icon-tabler icon-tabler-chef-hat"
@@ -19,16 +17,4 @@
           />
           <path d="M6.161 17.009l11.839 -.009" />
         </svg>
-      </span>
-      <span class="tooltiptext bg-black text-white text-center rounded-lg py-1 px-2 absolute top-[125%] left-1/2 transform -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300 mt-2">
-        Empleados
-      </span>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'ChefIcon',
-  };
-  </script>
-  
+</template>

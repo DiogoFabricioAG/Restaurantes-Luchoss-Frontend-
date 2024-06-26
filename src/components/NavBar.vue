@@ -7,26 +7,29 @@
             
         </router-link>
         <div v-if="userStore.user.isAuthenticated" class="flex space-x-3 text-white items-center">
-            <p class="text-black font-Tenali text-2xl">¡Bienvenido <strong class="font-Lato">{{ userStore.user.first_name }}</strong>!</p>
-            <router-link :to="{name:'sucursales'}" class="rounded-full bg-fuchsia-700 p-3  border-black hover:bg-fuchsia-500 duration-150 border ">
+            <p class="text-black font-Tenali text-2xl">¡Bienvenido <strong class="font-Lato text-base">{{ userStore.user.first_name }}</strong>!</p>
+            <router-link v-if="userStore.user.role === 'Cliente'" :to="{name:'sucursales'}" class="rounded-full group bg-fuchsia-700 p-3  border-black hover:bg-fuchsia-500 duration-150 border ">
                 <span><SucursalesIcono/></span>
             </router-link>
-            <router-link :to="{name:'pedidos'}" class="rounded-full bg-gray-700 p-3  border-black hover:bg-gray-500 duration-150 border ">
+            <router-link v-if="userStore.user.role === 'Cliente'" :to="{name:'pedidos'}" class="rounded-full group bg-gray-700 p-3  border-black hover:bg-gray-500 duration-150 border ">
                 <span><ConsultarIcono/></span>
             </router-link>
-            <a href="#" class="rounded-full bg-violet-700 p-3  border-black hover:bg-violet-500 duration-150 border ">
+            <a href="#" v-if="userStore.user.role === 'Cliente'" class="rounded-full bg-sky-700 p-3 group border-black hover:bg-sky-500 duration-150 border ">
+                <span><TiendaIcono/></span>
+            </a>
+            <a href="#" v-if="userStore.user.role === 'Admin'" class="rounded-full bg-violet-700 p-3 group border-black hover:bg-violet-500 duration-150 border ">
                 <span><ChefIcon/></span>
             </a>
-            <a href="#" class="rounded-full bg-cyan-700 p-3  border-black hover:bg-cyan-500 duration-150 border ">
+            <a href="#" v-if="userStore.user.role === 'Admin'" class="rounded-full group bg-cyan-700 p-3  border-black hover:bg-cyan-500 duration-150 border ">
                 <span><PedidosIcono/></span>
             </a>
-            <a href="#" class="rounded-full bg-pink-700 p-3  border-black hover:bg-pink-500 duration-150 border ">
+            <a href="#" v-if="userStore.user.role === 'Admin'" class="rounded-full bg-pink-700 p-3 group border-black hover:bg-pink-500 duration-150 border ">
                 <span><PolloIcono/></span>
             </a>
             
-            <Botones iconComponent="ChefIcon" tooltip-text="Descripción del ícono"/>
+            <!-- <Botones iconComponent="ChefIcon" tooltip-text="Descripción del ícono"/> -->
             
-            <router-link :to="{name:'carrito'}" class="rounded-full bg-green-700 p-3  border-black hover:bg-green-500 duration-150 border ">
+            <router-link v-if="userStore.user.role === 'Cliente'" :to="{name:'carrito'}" class="rounded-full group bg-green-700 p-3  border-black hover:bg-green-500 duration-150 border ">
                 <span><Carro/></span>
             </router-link>
             <button @click="userStore.logout" class="bg-red-800  border flex items-center space-x-2 rounded-full border-black p-3  hover:bg-red-600 duration-100 font-Lato" href="#">
@@ -36,11 +39,11 @@
             
         </div>
         <div v-else class="flex space-x-3 items-center text-white">
-            <router-link :to="{name:'login'}" class="bg-blue-800  border flex items-center space-x-2 border-black p-3 rounded-full text-lg hover:bg-blue-600 duration-100 font-Lato" href="#">
+            <router-link :to="{name:'option'}" class="bg-blue-800  border flex items-center space-x-2 border-black p-3 rounded-full text-lg hover:bg-blue-600 duration-100 font-Lato">
                 <span><LoginIcon/></span>
                 
             </router-link>
-            <router-link :to="{name:'option'}" class="bg-yellow-800 border flex items-center space-x-2 border-black p-3 rounded-full text-lg hover:bg-yellow-600 duration-100 font-Lato" href="#">
+            <router-link :to="{name:'register'}" class="bg-yellow-800 border flex items-center space-x-2 border-black p-3 rounded-full text-lg hover:bg-yellow-600 duration-100 font-Lato">
                 <span><RegisterIcon/></span>
             </router-link>
         </div>
@@ -55,6 +58,7 @@ import RegisterIcon from '@/components/icons/RegisterIcon.vue'
 import BadgeIcon from '@/components/icons/BadgeIcon.vue'
 import Botones from '@/components/Botones.vue'
 import ChefIcon from '@/components/icons/ChefIcon.vue'
+import TiendaIcono from '@/components/icons/TiendaIcono.vue'
 import Logout from '@/components/icons/Logout.vue'
 import PolloIcono from '@/components/icons/PolloIcono.vue'
 import PedidosIcono from '@/components/icons/PedidosIcono.vue'
@@ -74,6 +78,7 @@ export default {
         LoginIcon,
         Botones,
         RegisterIcon,
+        TiendaIcono,
         Logout,
         ChefIcon,
         BadgeIcon,

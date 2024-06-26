@@ -1,7 +1,7 @@
 <template>
     <NavComponent/>
 
-    <Complemento cabezera="Gracias por confiar en nosotros" :mensaje="$route.query.role"/>
+    <Complemento cabezera="Gracias por confiar en nosotros" mensaje="La comida une a las personas en todos los rincones del mundo"/>
     <span class="flex space-x-2 items-center justify-center">
         <button @click="irAtras" class="p-1 border hover:bg-slate-300 duration-150 border-black rounded-lg"><AtrasIcon class="size-4"/></button>
         <p class="text-sm font-Lato select-none">{{ datos }}</p>
@@ -104,7 +104,7 @@ export default {
     methods: {
         irAdelante(){
             this.pagina = 0
-            this.datos = this.$route.query.role
+            this.datos = "Cliente"
         },
         irAtras(){
             this.pagina = 1

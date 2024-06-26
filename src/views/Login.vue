@@ -48,24 +48,47 @@ export default {
                 return 'Error'
             }
             else{
-                await axios.post('cuenta',{
-                correo: this.email,
-                clave: this.clave
-            })
-            .then(response => {
+                if (this.$route.query.role === 'Cliente'){
+                    await axios.post('/cuenta/cliente',{
+                        correo: this.email,
+                        clave: this.clave
+                    })
+                    .then(response => {
 
-                this.userStore.login({
-                    email: response.data.Correo,
-                    last_name : response.data.Nombre,
-                    first_name : response.data.Paterno + ' ' + response.data.Materno,
-                    role : 'Cliente'
+                        this.userStore.login({
+                            email: response.data.Correo,
+                            last_name : response.data.Nombre,
+                            first_name : response.data.Paterno + ' ' + response.data.Materno,
+                            role : 'Cliente'
 
-                })
-                this.$router.push({name:'home'})
-            })
-            .catch(status => {
-                this.message = status.response.data.error
-            })
+                        })
+                        this.$router.push({name:'home'})
+                    })
+                    .catch(status => {
+                        this.message = status.response.data.error
+                    })
+                }
+                else {
+                    await axios.post('/cuenta/admin',{
+                        correo: this.email,
+                        clave: this.clave
+                    })
+                    .then(response => {
+
+                        this.userStore.login({
+                            email: response.data.Correo,
+                            last_name : response.data.Nombre,
+                            first_name : response.data.Paterno + ' ' + response.data.Materno,
+                            role : 'Admin'
+
+                        })
+                        this.$router.push({name:'home'})
+                    })
+                    .catch(status => {
+                        this.message = status.response.data.error
+                    })
+                }
+                
             }
             
 
