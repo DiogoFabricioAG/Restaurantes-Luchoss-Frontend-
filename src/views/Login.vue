@@ -21,13 +21,15 @@
 import NavComponent from '@/components/NavBar.vue'
 import { useUserStore } from '../stores/user'
 import Complemento from '@/components/Complemento.vue'
-
+import { useToastStore } from '@/stores/toast'
 import axios from 'axios'
 export default { 
     setup() {
         const userStore = useUserStore()
+        const toastStore = useToastStore()
         return{
             userStore,
+            toastStore
         }
     },
     components:{
@@ -38,13 +40,13 @@ export default {
         return {
             email :'',
             clave: '',
-            mensaje_error: '',
         }
     },
     methods: {
         async login(){
             if (this.email === '' || this.clave === ''){
-                this.mensaje_error = 'Debes completar cada uno de las casillas'
+                const mensaje_error = 'Debes completar cada uno de las casillas'
+                this.toastStore.showToast(3000, mensaje_error, "Wrong", 'bg-red-600')
                 return 'Error'
             }
             else{
@@ -65,10 +67,11 @@ export default {
                             direccion: response.data.Direccion
 
                         })
-                        this.$router.push({name:'home'})
+                        this.toastStore.showToast(3000, "Sesion Iniciada", "Check", 'bg-green-600')
+                        this.$router.push({name:'home'})  
                     })
                     .catch(status => {
-                        this.message = status.response.data.error
+                        this.toastStore.showToast(3000, status.response.data.error, "Wrong", 'bg-red-600')
                     })
                 }
                 else {
@@ -85,10 +88,11 @@ export default {
                             role : 'Admin'
 
                         })
+                        this.toastStore.showToast(3000, "Sesion Inciada, Admin 🛐", "Check", 'bg-green-600')
                         this.$router.push({name:'home'})
                     })
                     .catch(status => {
-                        this.message = status.response.data.error
+                        this.toastStore.showToast(3000, status.response.data.error, "Wrong", 'bg-red-600')
                     })
                 }
                 

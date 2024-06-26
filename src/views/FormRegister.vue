@@ -74,8 +74,16 @@ import Complemento from '@/components/Complemento.vue'
 import axios from 'axios'
 import SiguienteIcon from '@/components/icons/Siguiente.vue'
 import AtrasIcon from '@/components/icons/Atras.vue'
+import { useToastStore } from '@/stores/toast'
 
 export default { 
+    setup() {
+        const toastStore = useToastStore()
+        return{
+            toastStore
+        }
+    },
+    
     components:{
         NavComponent,
         Complemento,
@@ -134,11 +142,15 @@ export default {
                 this.tipoDoc === '' || 
                 this.documento === ''
             ) {
-                this.mensaje_error = 'Debes completar cada uno de las casillas';
+                const mensaje_error = 'Debes completar cada uno de las casillas';
+                this.toastStore.showToast(3000, mensaje_error, "Wrong", 'bg-red-600')
+
                 return 'Error';
             }
             if (this.clave.length < 5 ){
-                this.mensaje_error = "Tu clave es muy corta, intenta con una mayor a 8 digitos ";
+                const mensaje_error = "Tu clave es muy corta, intenta con una mayor a 8 digitos "
+                this.toastStore.showToast(3000, mensaje_error, "Wrong", 'bg-red-600')
+                return 'Error';
             }
             else {
                 
@@ -151,7 +163,7 @@ export default {
             })
             .then(response => {
                 if (response.data !== "La cuenta de Pedrin no ha sido agregada, es posible que el usuario ya esté registrado"){
-                    console.log('Cuenta Creada con exito');            
+                    console.log('Cuenta Creada con exito');          
                 }
                 else{
                     this.mensaje_error = response.data
@@ -176,7 +188,7 @@ export default {
                 documento: this.documento
             })
             .then(response => {
-                console.log("Usuario Registrado Correctamente");
+                this.toastStore.showToast(3000, "Usuario Registrado Correctamente", "Check", 'bg-green-600')
                 this.$router.push({name: 'login'})
             })
             .catch(error => {

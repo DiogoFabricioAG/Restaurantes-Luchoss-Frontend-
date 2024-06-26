@@ -17,15 +17,18 @@
             <router-link v-if="userStore.user.role === 'Cliente'" :to="{name: 'platillos'}" class="rounded-full bg-sky-700 p-3 group border-black hover:bg-sky-500 duration-150 border ">
                 <span><TiendaIcono/></span>
             </router-link>
-            <a href="#" v-if="userStore.user.role === 'Admin'" class="rounded-full bg-violet-700 p-3 group border-black hover:bg-violet-500 duration-150 border ">
+            <router-link :to="{name: 'empleados'}" v-if="userStore.user.role === 'Admin'" class="rounded-full bg-violet-700 p-3 group border-black hover:bg-violet-500 duration-150 border ">
                 <span><ChefIcon/></span>
-            </a>
-            <a href="#" v-if="userStore.user.role === 'Admin'" class="rounded-full group bg-cyan-700 p-3  border-black hover:bg-cyan-500 duration-150 border ">
+            </router-link>
+            <router-link :to="{name:'adminpedidos'}" v-if="userStore.user.role === 'Admin'" class="rounded-full group bg-yellow-700 p-3  border-black hover:bg-yellow-500 duration-150 border ">
+                <span><DineroIcono/></span>
+            </router-link>
+            <router-link :to="{name:'adminpedidos'}" v-if="userStore.user.role === 'Admin'" class="rounded-full group bg-cyan-700 p-3  border-black hover:bg-cyan-500 duration-150 border ">
                 <span><PedidosIcono/></span>
-            </a>
-            <a href="#" v-if="userStore.user.role === 'Admin'" class="rounded-full bg-pink-700 p-3 group border-black hover:bg-pink-500 duration-150 border ">
+            </router-link>
+            <router-link v-if="userStore.user.role === 'Admin'" :to="{name:'adminplatillos'}" class="rounded-full bg-pink-700 p-3 group border-black hover:bg-pink-500 duration-150 border ">
                 <span><PolloIcono/></span>
-            </a>
+            </router-link>
             
             <!-- <Botones iconComponent="ChefIcon" tooltip-text="Descripción del ícono"/> -->
             
@@ -59,6 +62,7 @@ import BadgeIcon from '@/components/icons/BadgeIcon.vue'
 import Botones from '@/components/Botones.vue'
 import ChefIcon from '@/components/icons/ChefIcon.vue'
 import TiendaIcono from '@/components/icons/TiendaIcono.vue'
+import DineroIcono from '@/components/icons/DineroIcono.vue'
 import Logout from '@/components/icons/Logout.vue'
 import PolloIcono from '@/components/icons/PolloIcono.vue'
 import PedidosIcono from '@/components/icons/PedidosIcono.vue'
@@ -78,6 +82,7 @@ export default {
         LoginIcon,
         Botones,
         RegisterIcon,
+        DineroIcono,
         TiendaIcono,
         Logout,
         ChefIcon,

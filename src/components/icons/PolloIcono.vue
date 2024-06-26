@@ -5,7 +5,7 @@
     
       </span>
       <span class="tooltiptext bg-black text-white text-center rounded-lg py-1 px-2 absolute top-[125%] left-1/2 transform -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300 mt-2">
-        Crear Platillo
+        Platillos
       </span>
     </div>
   </template>

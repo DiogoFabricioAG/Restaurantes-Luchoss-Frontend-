@@ -40,6 +40,31 @@ const router = createRouter({
       component: () => import('../views/Carrito.vue')
     },
     {
+      path: '/admin/platillos/',
+      name: 'adminplatillos',
+      component: () => import('../views/AdminPlatillo.vue')
+    },
+    {
+      path: '/admin/platillos/creacion/',
+      name: 'adminplatilloscreacion',
+      component: () => import('../views/CreacionPlatillo.vue')
+    },
+    {
+      path: '/admin/platillos/editar/',
+      name: 'adminplatillosedicion',
+      component: () => import('../views/EditarPlatillos.vue')
+    },
+    {
+      path: '/admin/empleados',
+      name: 'empleados',
+      component: () => import('../views/AdminEmpleados.vue')
+    },
+    {
+      path: '/admin/pedidos',
+      name: 'adminpedidos',
+      component: () => import('../views/AdminPedidos.vue')
+    },
+    {
       path: '/platillos',
       name: 'platillos',
       component: () => import('../views/Tienda.vue')

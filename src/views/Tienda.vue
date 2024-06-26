@@ -2,7 +2,7 @@
     <NavComponent/>
     <Complemento mensaje="Escoge sabiamente" cabezera="Disfruta de los platillos"/>
     <div class="flex justify-center my-4">
-        <button @click="solicitarInformacion" class="mx-2 px-4 py-2 bg-blue-500 border border-black duration-300 hover:tracking-tight text-white rounded hover:bg-blue-600">Solicitar Información</button>
+        <button @click="solicitarInformacion" class="mx-2 px-4 py-2 bg-blue-500 border font-Lato border-black duration-300 hover:tracking-tight text-white rounded hover:bg-blue-600">Solicitar Información</button>
     </div>
     
     <p class="font-Garamont text-4xl text-center ">Platillos Principales</p>
@@ -118,12 +118,16 @@ import NavComponent from '@/components/NavBar.vue'
 import Dialog from '@/components/Dialog.vue'
 import axios from 'axios'
 import { useUserStore } from '../stores/user'
+import { useToastStore } from '@/stores/toast'
 
 export default {
   setup() {
         const userStore = useUserStore()
+        const toastStore = useToastStore()
+
         return{
             userStore,
+            toastStore,
         }
     },
   components: {
@@ -166,13 +170,17 @@ export default {
       const existingItem = this.Orden.find(item => item.idProducto === orderItem.idProducto);
       if (existingItem) {
         existingItem.cantidad += orderItem.cantidad;
+        this.toastStore.showToast(3000, "Se ha aumentado la cantidad indicada a la orden", "Check", 'bg-green-600')
       } else {
         this.Orden.push(orderItem);
+        this.toastStore.showToast(3000, "Se ha agregado a la orden", "Check", 'bg-green-600')
+
       }
       this.closeDialog();
     },
     clearOrder(productId) {
       this.Orden = this.Orden.filter(item => item.idProducto !== productId);
+      this.toastStore.showToast(3000, "Se ha borrado este producto de tu orden", "Alert", 'bg-yellow-600')
       this.closeDialog();
     },
     async obtenerPlatillos() {
@@ -195,8 +203,11 @@ export default {
           precioTotal: producto ? producto.PrecioUnidad * item.cantidad : 0,
         };
       });
-
+      
       this.importeTotal = this.informacionPedido.reduce((total, item) => total + item.precioTotal, 0);
+      if (this.importeTotal === 0){
+        this.toastStore.showToast(3000, "Agrega algo de llevar a la orden", "Alert", 'bg-yellow-600')
+      }
       this.showInfoDialog = true;
     },
     closeInfoDialog() {
@@ -213,7 +224,7 @@ export default {
         detalle: this.Orden
       })
       .then(response => {
-        console.log(response.data);
+        this.toastStore.showToast(3000, response.data, "Check", 'bg-green-600')
       })
       .catch(error => {
         console.log(error);
