@@ -14,9 +14,9 @@
             <router-link v-if="userStore.user.role === 'Cliente'" :to="{name:'pedidos'}" class="rounded-full group bg-gray-700 p-3  border-black hover:bg-gray-500 duration-150 border ">
                 <span><ConsultarIcono/></span>
             </router-link>
-            <a href="#" v-if="userStore.user.role === 'Cliente'" class="rounded-full bg-sky-700 p-3 group border-black hover:bg-sky-500 duration-150 border ">
+            <router-link v-if="userStore.user.role === 'Cliente'" :to="{name: 'platillos'}" class="rounded-full bg-sky-700 p-3 group border-black hover:bg-sky-500 duration-150 border ">
                 <span><TiendaIcono/></span>
-            </a>
+            </router-link>
             <a href="#" v-if="userStore.user.role === 'Admin'" class="rounded-full bg-violet-700 p-3 group border-black hover:bg-violet-500 duration-150 border ">
                 <span><ChefIcon/></span>
             </a>
@@ -32,10 +32,10 @@
             <router-link v-if="userStore.user.role === 'Cliente'" :to="{name:'carrito'}" class="rounded-full group bg-green-700 p-3  border-black hover:bg-green-500 duration-150 border ">
                 <span><Carro/></span>
             </router-link>
-            <button @click="userStore.logout" class="bg-red-800  border flex items-center space-x-2 rounded-full border-black p-3  hover:bg-red-600 duration-100 font-Lato" href="#">
+            <button @click="logout" class="bg-red-800  border flex items-center space-x-2 rounded-full border-black p-3  hover:bg-red-600 duration-100 font-Lato" href="#">
                 <span><Logout/></span>
             </button>
-           
+            
             
         </div>
         <div v-else class="flex space-x-3 items-center text-white">
@@ -47,7 +47,7 @@
                 <span><RegisterIcon/></span>
             </router-link>
         </div>
-
+ 
     </div>
         
 </template>
@@ -87,6 +87,12 @@ export default {
         PolloIcono,
         ConsultarIcono,
         Carro,
-    }
+    },
+    methods: {
+        logout(){
+            this.userStore.logout()
+            this.$router.push({name:'home'})
+        }
+    },
 }
 </script>

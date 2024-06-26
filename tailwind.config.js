@@ -12,6 +12,7 @@ export default {
         Tenali :['Tenali Ramakrishna', 'sans-serif'],
         Niconne : ['Niconne', 'cursive'],
         Alata: ['Alata', 'sans-serif'],
+        Garamont: ['EB Garamond', 'serif']
 
       },
     plugins: [],

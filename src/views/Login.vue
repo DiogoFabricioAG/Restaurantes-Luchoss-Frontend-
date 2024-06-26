@@ -54,12 +54,15 @@ export default {
                         clave: this.clave
                     })
                     .then(response => {
-
+                        console.log(response.data);
                         this.userStore.login({
                             email: response.data.Correo,
                             last_name : response.data.Nombre,
                             first_name : response.data.Paterno + ' ' + response.data.Materno,
-                            role : 'Cliente'
+                            role : 'Cliente',
+                            id_cliente : response.data.ID_Cliente,
+                            id_cuenta : response.data.ID_Cuenta,
+                            direccion: response.data.Direccion
 
                         })
                         this.$router.push({name:'home'})

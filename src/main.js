@@ -4,8 +4,9 @@ import '@fontsource/lato'
 import '@fontsource/holtwood-one-sc'
 import '@fontsource/tenali-ramakrishna'
 import '@fontsource/niconne'
-
+import '@fontsource/eb-garamond';
 import '@fontsource/alata'
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'

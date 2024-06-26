@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/eb-garamond": "^5.0.19",
     "@fontsource/alata": "^5.0.14",
+    "@fontsource/eb-garamond": "^5.0.18",
     "@fontsource/holtwood-one-sc": "^5.0.20",
     "@fontsource/lato": "^5.0.21",
     "@fontsource/niconne": "^5.0.13",

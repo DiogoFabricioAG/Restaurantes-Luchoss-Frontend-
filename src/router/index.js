@@ -18,6 +18,7 @@ const router = createRouter({
       name: 'pedidos',
       component: () => import('../views/PedidosCliente.vue')
     },
+
     {
       path: '/register/',
       name: 'register',
@@ -39,9 +40,9 @@ const router = createRouter({
       component: () => import('../views/Carrito.vue')
     },
     {
-      path: '/platos',
-      name: 'platos',
-      component: () => import('../views/Platillos.vue')
+      path: '/platillos',
+      name: 'platillos',
+      component: () => import('../views/Tienda.vue')
     },
     {
       path: '/about',

@@ -11,7 +11,7 @@
                <p><strong>Administrador: </strong>{{ sucur.Administrador }}</p>
                </div>
                <div>
-                <span class="font-Holtwood text-5xl">{{ index }}</span>
+                <span class="font-Holtwood text-5xl">{{ index +1 }}</span>
                </div>
                
            </div>
