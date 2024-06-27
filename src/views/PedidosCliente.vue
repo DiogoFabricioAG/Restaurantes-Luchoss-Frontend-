@@ -10,6 +10,8 @@
                         <tr>
                             <th scope="col" class="px-6 py-3">Nombre del Pedido</th>
                             <th scope="col" class="px-6 py-3">Total (S/)</th>
+                            <th scope="col" class="px-6 py-3">Descuento (S/)</th>
+                            <th scope="col" class="px-6 py-3">Total a pagar (S/)</th>
                             <th scope="col" class="px-6 py-3">Estado</th>
                             <th scope="col" class="px-6 py-3">Operaciones</th>
                         </tr>
@@ -17,6 +19,8 @@
                     <tbody>
                         <tr v-for="(mipedido,index) in mispedidos" :key="index" class="bg-white border-b">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900">{{ mipedido.ID_Pedido }}</th>
+                            <td class="px-6 py-4">{{ mipedido.Total }}</td>
+                            <td class="px-6 py-4">{{mipedido.Promocion}}</td>
                             <td class="px-6 py-4">{{ mipedido.Total_pagar }}</td>
                             <td class="px-6 py-4">{{mipedido.ID_Estado}}</td>
                             <td class="px-6 py-4 space-x-1 flex text-white justify-end">
