@@ -106,6 +106,7 @@ export default {
             direccion: '',
             ruc: '',
             tipoDoc: '',
+            cuentas : [],
             documento: ''
         }
     },
@@ -118,16 +119,8 @@ export default {
             this.pagina = 1
             this.datos = 'Cuenta'
         },
-
-        generateRandomString() {
-            const prefix = 'C';
-            const randomDigits = Math.floor(Math.random() * 100000).toString().padStart(5, '0');
-            return prefix + randomDigits;
-        },
-
-
+        
         async register(){
-            const idgenerado = this.generateRandomString()
             if (
                 this.nombreusuario === '' || 
                 this.clave === '' || 
@@ -153,48 +146,52 @@ export default {
                 return 'Error';
             }
             else {
-                
                 await axios.post('/registro/nuevaCuenta', {
-                idCuenta: idgenerado,
                 correo: this.correo,
                 clave: this.clave,
                 usuario: this.nombreusuario,
                 distrito: this.distrito
-            })
-            .then(response => {
-                if (response.data !== "La cuenta de Pedrin no ha sido agregada, es posible que el usuario ya esté registrado"){
-                    console.log('Cuenta Creada con exito');          
-                }
-                else{
-                    this.mensaje_error = response.data
-                }
-                
-            })
-            .catch(error => {
-                return error;
-            })
-            }
-            await axios.post('/registro/nuevoCliente' , {
-                idCliente: this.generateRandomString(),
-                idCuenta: idgenerado,
-                nombre: this.nombre,
-                paterno: this.paterno,
-                materno: this.materno,
-                telefono: this.telefono,
-                distrito: this.distrito,
-                direccion: this.direccion,
-                ruc: this.ruc,
-                tipoDoc: this.tipoDoc,
-                documento: this.documento
-            })
-            .then(response => {
-                this.toastStore.showToast(3000, "Usuario Registrado Correctamente", "Check", 'bg-green-600')
-                this.$router.push({name: 'login'})
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            
+                })
+                .then(response => {
+                    if (response.data !== "La cuenta de Pedrin no ha sido agregada, es posible que el usuario ya esté registrado"){
+                        console.log('Cuenta Creada con exito');          
+                    }
+                    else{
+                        this.mensaje_error = response.data
+                    }
+                    
+                })
+                .catch(error => {
+                    return error;
+                })
+                await axios.get('registro/cuenta')
+                .then(response => {
+                    this.cuentas = response.data
+                })
+                .catch(error => {
+                    return error
+                })
+                const cuenta = this.cuentas.filter(cuenta => cuenta.Correo === this.correo) 
+                await axios.post('/registro/nuevoCliente' , {
+                    idCuenta: cuenta[0].ID_Cuenta,
+                    nombre: this.nombre,
+                    paterno: this.paterno,
+                    materno: this.materno,
+                    telefono: this.telefono,
+                    distrito: this.distrito,
+                    direccion: this.direccion,
+                    ruc: this.ruc,
+                    tipoDoc: this.tipoDoc,
+                    documento: this.documento
+                })
+                .then(response => {
+                    this.toastStore.showToast(3000, response.data, "Check", 'bg-green-600')
+                    this.$router.push({name: 'login', query:{role : 'Cliente'}})
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            } 
         }
     },
 }

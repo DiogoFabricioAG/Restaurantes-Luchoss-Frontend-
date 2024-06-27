@@ -68,17 +68,19 @@
 
         <!-- Lista de empleados (ejemplo) -->
         <section class="my-2 grid grid-cols-3">
-            <div v-for="(index) in 5" :key="index" class="flex m-4 border-[2px] border-black rounded-xl items-center  gap-4">
-                <button  @click="abrirDialogo" class="w-12 h-full">
+            <div v-for="(repartidor,index) in repartidores" :key="index" class="flex m-4 border-[2px] border-black rounded-xl items-center  gap-4">
+                <button  @click="abrirDialogo(repartidor)" class="w-12 h-full">
                     <div class="group bg-red-600 w-12 justify-center rounded-l-lg border-[2px] border-black h-full flex items-center text-white">
                         <WrongIcon/>
                     </div>
                 </button>
                 <div>
-                    <h3 class="text-lg/tight font-medium text-gray-900">Empleado {{ index +1 }}</h3>
+                    <h3 class="text-lg/tight font-medium text-gray-900">{{ repartidor.Nombre }} {{ repartidor.Paterno }}</h3>
                     <p class="mt-0.5 text-sm text-gray-700">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates voluptas distinctio
-                        nesciunt quas non animi.
+                        Sucursal: <strong>{{ repartidor.ID_Sucursal }}</strong>
+                    </p>
+                    <p class="mt-0.5 text-sm font-thin text-gray-700">
+                        Telefono: <strong>{{ repartidor.Telefono }}</strong>
                     </p>
                 </div>
             </div>
@@ -102,6 +104,15 @@ export default {
         AgregarIcono,
         WrongIcon,
     },
+    setup() {
+        const userStore = useUserStore();
+        const toastStore = useToastStore();
+
+        return {
+            userStore,
+            toastStore,
+        };
+    },
     data() {
         return {
             formulario: {
@@ -112,6 +123,8 @@ export default {
                 telefono: '',
                 correo: ''
             },
+            empleadoaborrar: '',
+            repartidores: [],
             mostrarFormularioDialogo: false,
             mostrarDialogo: false,
         };
@@ -124,12 +137,19 @@ export default {
         cerrarFormulario() {
             this.mostrarFormularioDialogo = false;
         },
-
+        async ObtenerdatosEmpleados(){
+            await axios.get('mostrar/repartidor')
+            .then(response => {
+                this.repartidores = response.data
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
         async guardarEmpleado() {
             try {
                 // Aquí se simula una solicitud para guardar el empleado
                 await axios.post('actualizarrepartidor/contratar',{
-                    idEmpleado: this.generarCodigo(),
                     nombre: this.formulario.nombre,
                     paterno: this.formulario.paterno,
                     materno: this.formulario.materno,
@@ -138,45 +158,55 @@ export default {
                     correo :this.formulario.correo
                 })
                 .then(response => {
-                    console.log(response.data);
+                    if (response.data !== "El repartidor ya contratado actualmente.."){
+                        this.toastStore.showToast(3000, response.data, "Check", 'bg-green-600')
+                        this.$router.push({name:'pedidosabiertos'})
+                    }
+                    else{
+                        this.toastStore.showToast(3000, response.data, "Wrong", 'bg-red-600')
+
+                    }
                 })
                 .catch(error => {
                     console.log(error);
                 })
                 
-                this.toastStore.showToast(3000, 'Repartidor contratado exitosamente', "Check", 'bg-green-600')
                 this.cerrarFormulario();
             } catch (error) {
                 console.error('Error al guardar empleado:', error);
             }
         },
 
-        abrirDialogo() {
+        abrirDialogo(empleado) {
+            this.empleadoaborrar= empleado
             this.mostrarDialogo = true;
         },
 
         cerrarDialogo() {
             this.mostrarDialogo = false;
         },
-        generarCodigo() {
-            const prefix = 'RE';
-            const randomDigits = Math.floor(1000 + Math.random() * 9000); // Genera un número aleatorio entre 1000 y 9999
-            return `${prefix}${randomDigits}`;
-        },
-        confirmarDespido() {
-            console.log("Has despedido a esta persona");
-            this.cerrarDialogo();
+        async confirmarDespido() {
+            await axios.put('actualizarrepartidor/despedir', {
+                idEmpleado: this.empleadoaborrar.ID_Empleado,
+                nombre: this.empleadoaborrar.Nombre,
+                paterno: this.empleadoaborrar.Paterno,
+                materno: this.empleadoaborrar.Materno
+            }).then(response => {
+                this.toastStore.showToast(3000, response.data, "Check", 'bg-green-600')
+                this.repartidores = this.repartidores.filter(repartidor => repartidor.ID_Empleado !== this.empleadoaborrar.ID_Empleado)
+                this.cerrarDialogo();
+            })
+            .catch(error => {
+                this.toastStore.showToast(3000, "Ocurrio un error al momento del despido", "Wrong", 'bg-red-600')
+                console.log(error);
+            })
+            
         }
     },
-    setup() {
-        const userStore = useUserStore();
-        const toastStore = useToastStore();
-
-        return {
-            userStore,
-            toastStore,
-        };
+    mounted() {
+        this.ObtenerdatosEmpleados()
     },
+    
 };
 </script>
 

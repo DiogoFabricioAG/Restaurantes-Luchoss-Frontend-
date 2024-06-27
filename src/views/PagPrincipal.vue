@@ -16,7 +16,7 @@
                 <p class="text-end">¡Te esperamos!</p>
             </div>
 
-
+                
         </section>
     </main>     
 

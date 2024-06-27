@@ -14,7 +14,7 @@
             <router-link v-if="userStore.user.role === 'Cliente'" :to="{name:'pedidos'}" class="rounded-full group bg-gray-700 p-3  border-black hover:bg-gray-500 duration-150 border ">
                 <span><ConsultarIcono/></span>
             </router-link>
-            <router-link v-if="userStore.user.role === 'Cliente'" :to="{name: 'platillos'}" class="rounded-full bg-sky-700 p-3 group border-black hover:bg-sky-500 duration-150 border ">
+            <router-link v-if="userStore.user.role === 'Cliente'" :to="{name: 'platillos'}" class="rounded-full bg-green-700 p-3 group border-black hover:bg-green-500 duration-150 border ">
                 <span><TiendaIcono/></span>
             </router-link>
             <router-link :to="{name: 'empleados'}" v-if="userStore.user.role === 'Admin'" class="rounded-full bg-violet-700 p-3 group border-black hover:bg-violet-500 duration-150 border ">
@@ -23,7 +23,7 @@
             <router-link :to="{name:'adminpedidos'}" v-if="userStore.user.role === 'Admin'" class="rounded-full group bg-yellow-700 p-3  border-black hover:bg-yellow-500 duration-150 border ">
                 <span><DineroIcono/></span>
             </router-link>
-            <router-link :to="{name:'adminpedidos'}" v-if="userStore.user.role === 'Admin'" class="rounded-full group bg-cyan-700 p-3  border-black hover:bg-cyan-500 duration-150 border ">
+            <router-link :to="{name:'pedidosabiertos'}" v-if="userStore.user.role === 'Admin'" class="rounded-full group bg-cyan-700 p-3  border-black hover:bg-cyan-500 duration-150 border ">
                 <span><PedidosIcono/></span>
             </router-link>
             <router-link v-if="userStore.user.role === 'Admin'" :to="{name:'adminplatillos'}" class="rounded-full bg-pink-700 p-3 group border-black hover:bg-pink-500 duration-150 border ">
@@ -32,9 +32,7 @@
             
             <!-- <Botones iconComponent="ChefIcon" tooltip-text="Descripción del ícono"/> -->
             
-            <router-link v-if="userStore.user.role === 'Cliente'" :to="{name:'carrito'}" class="rounded-full group bg-green-700 p-3  border-black hover:bg-green-500 duration-150 border ">
-                <span><Carro/></span>
-            </router-link>
+
             <button @click="logout" class="bg-red-800  border flex items-center space-x-2 rounded-full border-black p-3  hover:bg-red-600 duration-100 font-Lato" href="#">
                 <span><Logout/></span>
             </button>

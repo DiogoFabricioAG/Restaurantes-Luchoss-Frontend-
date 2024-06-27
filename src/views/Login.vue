@@ -15,7 +15,7 @@
                 <p>{{ mensaje_error }}</p>
             </div>
     </form>
-    <p class="text-center">¿No tienes una cuenta? <router-link :to="{name:'option'}" class="underline font-bold duration-150 hover:shadow-md" href="#">Registrate aqui</router-link></p>
+    <p class="text-center">¿No tienes una cuenta? <router-link :to="{name:'register'}" class="underline font-bold duration-150 hover:shadow-md" href="#">Registrate aqui</router-link></p>
 </template>
 <script>
 import NavComponent from '@/components/NavBar.vue'
@@ -92,6 +92,7 @@ export default {
                         this.$router.push({name:'home'})
                     })
                     .catch(status => {
+                        console.log(status);
                         this.toastStore.showToast(3000, status.response.data.error, "Wrong", 'bg-red-600')
                     })
                 }

@@ -62,7 +62,6 @@
         </div>
       </button>
     </div>
-  
     <!-- Secciones para Postres y Bebidas siguen la misma estructura -->
   
     <Dialog
@@ -92,13 +91,17 @@
           <option value="Boleta">Boleta</option>
         </select>
         </div>
-        <div>
+        <div class="flex flex-col">
           <label for="metpag">Metodo de Pago</label>
         <select name="metpag" v-model="metodopag">
           <option value="Visa">Visa</option>
           <option value="Mastercard">Mastercard</option>
           <option value="Efectivo">Efectivo</option>
           <option value="Izipay">Izipay</option>
+        </select>
+          <label for="metpag">Repartidor</label>
+        <select name="metpag" v-model="repartidor">
+          <option v-for="(item, index) in repartidores" :key="index" :value="item.ID_Empleado">{{ item.Nombre }} - {{ item.Distrito }}</option>
         </select>
         </div>
         
@@ -141,6 +144,8 @@ export default {
       bebidas: [],
       postres: [],
       Orden: [],
+      repartidor:'',
+      repartidores: [],
       showDialog: false,
       dialogTitle: '',
       selectedProductId: '',
@@ -152,12 +157,7 @@ export default {
     };
   },
   methods: {
-    generarIdPedido(){
-            const prefix = 'PED';
-            const randomNumber = Math.floor(Math.random() * 10000); // Generates a number between 0 and 9999
-            const formattedNumber = String(randomNumber).padStart(4, '0'); // Pads with leading zeros to ensure 4 digits
-            return `${prefix}${formattedNumber}`;
-        },
+    
     openDialog(productId, productName) {
       this.selectedProductId = productId;
       this.dialogTitle = productName;
@@ -218,21 +218,33 @@ export default {
         idCliente: this.userStore.user.id_cliente,
         comprobante: this.comprobante,
         idCuenta: this.userStore.user.id_cuenta,
-        idEmpleado: "RE0009",
+        idEmpleado: this.repartidor,
         direccion: this.userStore.user.direccion,
         tipoPago: this.metodopag, 
         detalle: this.Orden
       })
       .then(response => {
+        this.closeInfoDialog()
+        this.Orden = []
         this.toastStore.showToast(3000, response.data, "Check", 'bg-green-600')
       })
       .catch(error => {
         console.log(error);
       })
     },
+    async ObtenerdatosEmpleados(){
+        await axios.get('mostrar/repartidor')
+        .then(response => {
+            this.repartidores = response.data
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    },
   },
   mounted() {
-    this.obtenerPlatillos();
+    this.obtenerPlatillos()
+    this.ObtenerdatosEmpleados()
   },
 };
 </script>

@@ -65,6 +65,11 @@ const router = createRouter({
       component: () => import('../views/AdminPedidos.vue')
     },
     {
+      path: '/admin/pedidos/abiertos',
+      name: 'pedidosabiertos',
+      component: () => import('../views/PedidosAbiertos.vue')
+    },
+    {
       path: '/platillos',
       name: 'platillos',
       component: () => import('../views/Tienda.vue')

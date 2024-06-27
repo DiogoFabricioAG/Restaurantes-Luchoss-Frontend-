@@ -12,6 +12,7 @@ const store = useToastStore()
             <IconAlert v-if="store.type === 'Alert'" />
             <IconCheck v-if="store.type === 'Check'" />
             <IconWrong v-if="store.type === 'Wrong'" />
+            <IconSurprise v-if="store.type === 'Surprise'" />
         </span>
         <span>
             <p>{{ store.message }}</p>
@@ -25,13 +26,14 @@ const store = useToastStore()
 import IconAlert from './icons/AlertIcon.vue';
 import IconCheck from './icons/CheckIcon.vue';
 import IconWrong from './icons/WrongIcon.vue';
-
+import IconSurprise from './icons/IconSurprise.vue';
 
 export default {
     components: {
         IconAlert,
         IconCheck,
         IconWrong,
+        IconSurprise,
     }
 }
 </script>
